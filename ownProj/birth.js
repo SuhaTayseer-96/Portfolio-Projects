@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let audioContext;
   let analyser;
   let microphone;
-
+//update the number of candles displayed
   function updateCandleCount() {
     const activeCandles = candles.filter(
       (candle) => !candle.classList.contains("out")
     ).length;
     candleCountDisplay.textContent = activeCandles;
   }
-
+// Add candles at the cake
   function addCandle(left, top) {
     const candle = document.createElement("div");
     candle.className = "candle";
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     addCandle(left, top);
   });
 
+  // Check if is blowing from the microphone
   function isBlowing() {
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -48,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return average > 40; //
   }
-
+  
+  // Trying blow out the candles regarding on the blowing detection
   function blowOutCandles() {
     let blownOut = 0;
 
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateCandleCount();
     }
   }
-
+//browser supports getUserMedia for audio
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
